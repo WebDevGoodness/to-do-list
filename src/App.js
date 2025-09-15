@@ -11,12 +11,13 @@ const App = () => {
 
   
   const addToList = () => {
-    let newList = {myLists};
-    
-    {myLists === "" ? alert("Please enter a task") : 
+    if (myLists === "") {
+      alert("Please enter a task");
+    } else {
+      let newList = { myLists };
       setallList([...allList, newList]);
       setmyLists("");
-      setcount(allList.length + 1); 
+      setcount(allList.length + 1);
     }
   }
 
