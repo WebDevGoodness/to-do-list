@@ -8,6 +8,7 @@ const App = () => {
   const [myLists, setmyLists] = useState("");
   const [allList, setallList] = useState([]);
   const [count, setcount] = useState("no")
+  const [editIndex, setEditIndex] = useState(null); // State to track which item is being edited
 
   
   const addToList = () => {
@@ -28,6 +29,24 @@ const App = () => {
     setcount(allList.length - 1);
   }
 
+  // Function to set the edit mode for a specific task
+  const startEdit = (index) => {
+    setEditIndex(index);
+  };
+
+  // Function to update the task and exit edit mode
+  const updateList = (index, newText) => {
+    if (newText.trim() === "") {
+      alert("Task cannot be empty.");
+      return;
+    }
+    const updatedList = [...allList];
+    updatedList[index].myLists = newText;
+    setallList(updatedList);
+    setEditIndex(null); // Exit edit mode
+  };
+
+
   return (
     <>
       <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -39,7 +58,13 @@ const App = () => {
 
   <AddToDo addToList={addToList} setmyLists={setmyLists} myLists={myLists} />
       
-  <DisplayToDo deleteList={deleteList} allList={allList}/>
+  <DisplayToDo 
+    deleteList={deleteList} 
+    allList={allList}
+    startEdit={startEdit}
+    editIndex={editIndex}
+    updateList={updateList}
+  />
 
           <div><p>You have {count} pending task(s)</p></div>
         </div>
